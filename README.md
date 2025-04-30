@@ -50,10 +50,12 @@ For detailed project information, visit the [Meta Developers Documentation](http
   - `android.permission.CAMERA` - Required by `WebCamTexture`
   - `horizonos.permission.HEADSET_CAMERA` - Custom Meta permission for passthrough camera access
 
+### Additional features
+
+- **Passthrough feature:** must be **enabled** to access the Passthrough Camera API.
+
 ## Current Limitations & Known Issues
 
-- **Experimental API:**
-  - The Passthrough Camera API is experimental, which may temporarily exclude apps from Meta Store submissions.
 - **Single Camera Access:**
   - Only one passthrough camera (left or right) can be accessed at a time. Switching between cameras requires disabling and re-enabling the camera manager component. This is a Unity `WebCamTexture` limitation.
 - **WebCamTexture Constraints:**

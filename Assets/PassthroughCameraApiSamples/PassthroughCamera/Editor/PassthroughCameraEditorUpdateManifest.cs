@@ -22,6 +22,7 @@ namespace PassthroughCameraSamples.Editor
         private void UpdateAndroidManifest()
         {
             var pcaManifestPermission = "horizonos.permission.HEADSET_CAMERA";
+            var pcaManifestPassthroughFeature = "com.oculus.feature.PASSTHROUGH";
             var manifestFolder = Application.dataPath + "/Plugins/Android";
             try
             {
@@ -40,37 +41,56 @@ namespace PassthroughCameraSamples.Editor
                 androidNamepsaceURI = element.GetAttribute("xmlns:android");
                 if (!string.IsNullOrEmpty(androidNamepsaceURI))
                 {
-                    // Check if the android manifest already has the Passthrough Camera Access permission
-                    var nodeList = doc.SelectNodes("/manifest/uses-permission");
+                    // Check if the android manifest has the Passthrough Feature enabled
+                    var nodeList = doc.SelectNodes("/manifest/uses-feature");
+                    var noPT = true;
                     foreach (XmlElement e in nodeList)
                     {
                         var attr = e.GetAttribute("name", androidNamepsaceURI);
-                        if (attr == pcaManifestPermission)
+                        if (attr == pcaManifestPassthroughFeature)
                         {
-                            Debug.Log("PCA Editor: Android manifest already has the proper permissions.");
-                            return;
+                            noPT = false;
+                            break;
                         }
                     }
-
-                    if (EditorUtility.DisplayDialog("Meta Passthrough Camera Access", "\"horizonos.permission.HEADSET_CAMERA\" permission IS NOT PRESENT in AndroidManifest.xml", "Add it", "Do Not Add it"))
+                    if (noPT)
                     {
-                        element = (XmlElement)doc.SelectSingleNode("/manifest");
-                        if (element != null)
-                        {
-                            // Insert Passthrough Camera Access permission
-                            var newElement = doc.CreateElement("uses-permission");
-                            _ = newElement.SetAttribute("name", androidNamepsaceURI, pcaManifestPermission);
-                            _ = element.AppendChild(newElement);
-
-                            doc.Save(manifestFolder + "/AndroidManifest.xml");
-                            Debug.Log("PCA Editor: Successfully modified android manifest with Passthrough Camera Access permission.");
-                            return;
-                        }
-                        throw new OperationCanceledException("Could not find android namespace URI in android manifest.");
+                        throw new OperationCanceledException("To use the Passthrough Camera Access Api you need to enable Passthrough feature.");
                     }
                     else
                     {
-                        throw new OperationCanceledException("To use the Passthrough Camera Access Api you need to add the \"horizonos.permission.HEADSET_CAMERA\" permission in your AndroidManifest.xml.");
+                        // Check if the android manifest already has the Passthrough Camera Access permission
+                        nodeList = doc.SelectNodes("/manifest/uses-permission");
+                        foreach (XmlElement e in nodeList)
+                        {
+                            var attr = e.GetAttribute("name", androidNamepsaceURI);
+                            if (attr == pcaManifestPermission)
+                            {
+                                Debug.Log("PCA Editor: Android manifest already has the proper permissions.");
+                                return;
+                            }
+                        }
+
+                        if (EditorUtility.DisplayDialog("Meta Passthrough Camera Access", "\"horizonos.permission.HEADSET_CAMERA\" permission IS NOT PRESENT in AndroidManifest.xml", "Add it", "Do Not Add it"))
+                        {
+                            element = (XmlElement)doc.SelectSingleNode("/manifest");
+                            if (element != null)
+                            {
+                                // Insert Passthrough Camera Access permission
+                                var newElement = doc.CreateElement("uses-permission");
+                                _ = newElement.SetAttribute("name", androidNamepsaceURI, pcaManifestPermission);
+                                _ = element.AppendChild(newElement);
+
+                                doc.Save(manifestFolder + "/AndroidManifest.xml");
+                                Debug.Log("PCA Editor: Successfully modified android manifest with Passthrough Camera Access permission.");
+                                return;
+                            }
+                            throw new OperationCanceledException("Could not find android namespace URI in android manifest.");
+                        }
+                        else
+                        {
+                            throw new OperationCanceledException("To use the Passthrough Camera Access Api you need to add the \"horizonos.permission.HEADSET_CAMERA\" permission in your AndroidManifest.xml.");
+                        }
                     }
                 }
             }

@@ -84,6 +84,14 @@ namespace PassthroughCameraSamples
 
         private IEnumerator InitializeWebCamTexture()
         {
+            // Check if Passhtrough is present in the scene and is enabled
+            var ptLayer = FindAnyObjectByType<OVRPassthroughLayer>();
+            if (ptLayer == null || !PassthroughCameraUtils.IsPassthroughEnabled())
+            {
+                PCD.DebugMessage(LogType.Error, "Passthrough must be enabled to use the Passthrough Camera API.");
+                yield break;
+            }
+
 #if !UNITY_6000_OR_NEWER
             // There is a bug on Unity 2022 that causes a crash if you don't wait a frame before initializing the WebCamTexture.
             // Waiting for one frame is important and prevents the bug.

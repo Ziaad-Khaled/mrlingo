@@ -118,7 +118,7 @@ namespace PassthroughCameraSamples.MultiObjectDetection
                 var perY = (centerY + halfHeight) / displayHeight;
 
                 // Get object class name
-                var classname = m_labels[labelIDs[n]].Replace(" ", "_");
+                var classname = m_labels[labelIDs[n]];
 
                 // Get the 3D marker world position using Depth Raycast
                 var centerPixel = new Vector2Int(Mathf.RoundToInt(perX * camRes.x), Mathf.RoundToInt((1.0f - perY) * camRes.y));

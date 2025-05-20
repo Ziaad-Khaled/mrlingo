@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.XR;
+
 
 public class MCQManager : MonoBehaviour
 {
@@ -73,13 +75,21 @@ public void SubmitAnswer()
     Debug.Log("SubmitAnswer() finished.");
 }
 
+
 void Update()
 {
     Debug.Log($"Update: hasSubmitted={hasSubmitted}, selectedAnswerIndex={selectedAnswerIndex}");
-    
-    if (!hasSubmitted && selectedAnswerIndex != -1 && Input.GetKeyDown(KeyCode.JoystickButton0))
+
+    // Detect trigger press (IndexTrigger)
+    bool triggerPressed = false;
+    InputDevice device = InputDevices.GetDeviceAtXRNode(XRNode.RightHand);
+
+    if (device.TryGetFeatureValue(CommonUsages.triggerButton, out triggerPressed) && triggerPressed)
     {
-        SubmitAnswer();
+        if (!hasSubmitted && selectedAnswerIndex != -1)
+        {
+            SubmitAnswer();
+        }
     }
 }
 

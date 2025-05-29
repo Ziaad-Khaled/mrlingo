@@ -23,6 +23,15 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/PassthroughCameraApiSamples/ShaderSample/ShaderSample.unity
     guid: 708e8dca6055146b28afe2481f141457
+  - enabled: 0
+    path: Assets/Scenes/mcqscene.unity
+    guid: e473db2e5506e5546a923bedc65f9168
+  - enabled: 0
+    path: Assets/Samples/Meta XR Core SDK/74.0.0/Sample Scenes/VirtualKeyboard.unity
+    guid: c9684441ee1da1244a223118fdaa5d13
+  - enabled: 0
+    path: Assets/Scenes/WorkingUIInteractions.unity
+    guid: 9c3d3a3bbba7dbe4cae4a956e88da476
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: f2bf97b3acdb64248a707c407c9fc54e, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: a971eac5e950046e586c5e153e32d05c, type: 2}

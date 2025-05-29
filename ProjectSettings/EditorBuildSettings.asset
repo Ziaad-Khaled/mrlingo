@@ -17,7 +17,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/PassthroughCameraApiSamples/BrightnessEstimation/BrightnessEstimation.unity
     guid: 8ea13e682474e1748965f8e21972f2b2
-  - enabled: 1
+  - enabled: 0
     path: Assets/PassthroughCameraApiSamples/MultiObjectDetection/MultiObjectDetection.unity
     guid: 20c230cce46443841b5727b1d6100bfc
   - enabled: 0
@@ -32,6 +32,9 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/WorkingUIInteractions.unity
     guid: 9c3d3a3bbba7dbe4cae4a956e88da476
+  - enabled: 1
+    path: Assets/Scenes/MultiObjectDetection.unity
+    guid: 0966777f7049ee847945bd43808262e0
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: f2bf97b3acdb64248a707c407c9fc54e, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: a971eac5e950046e586c5e153e32d05c, type: 2}

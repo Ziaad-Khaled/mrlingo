@@ -188,7 +188,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5513336307348671671, guid: 3cf0d13bb4845a344b9fed0569d71e84, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6920871428046243622, guid: 3cf0d13bb4845a344b9fed0569d71e84, type: 3}
       propertyPath: m_LocalPosition.x
@@ -475,6 +475,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8722207748505512711, guid: 259c0c899b7e0c14aa431eefdc0aacc6, type: 3}
   m_PrefabInstance: {fileID: 1062278095}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1370368846 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5846769668076299689, guid: 259c0c899b7e0c14aa431eefdc0aacc6, type: 3}
+  m_PrefabInstance: {fileID: 1062278095}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea678c754c1748f40b56a3732c318359, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1373946500
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -847,7 +858,7 @@ PrefabInstance:
     - target: {fileID: 7042133912099342453, guid: 946c4bcf5ee78c2438bd71dd2f9fe1f9, type: 3}
       propertyPath: m_uiMenuManager
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1370368846}
     - target: {fileID: 7042133912099342453, guid: 946c4bcf5ee78c2438bd71dd2f9fe1f9, type: 3}
       propertyPath: m_environmentRaycast
       value: 
@@ -863,7 +874,7 @@ PrefabInstance:
     - target: {fileID: 7042133912099342453, guid: 946c4bcf5ee78c2438bd71dd2f9fe1f9, type: 3}
       propertyPath: OnObjectsIdentified.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1370368846}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -880,7 +891,7 @@ PrefabInstance:
     - target: {fileID: 101290561754266665, guid: 927c1b782bb796b4b9b433d533cbccca, type: 3}
       propertyPath: m_Camera
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 51105848}
     - target: {fileID: 2184060436030677583, guid: 927c1b782bb796b4b9b433d533cbccca, type: 3}
       propertyPath: m_environmentRaycast
       value: 
@@ -892,7 +903,7 @@ PrefabInstance:
     - target: {fileID: 2184060436030677583, guid: 927c1b782bb796b4b9b433d533cbccca, type: 3}
       propertyPath: OnObjectsDetected.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1370368846}
     - target: {fileID: 4976470222712890361, guid: 927c1b782bb796b4b9b433d533cbccca, type: 3}
       propertyPath: m_webCamTextureManager
       value: 

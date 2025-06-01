@@ -33,7 +33,13 @@ EditorBuildSettings:
     path: Assets/Scenes/WorkingUIInteractions.unity
     guid: 9c3d3a3bbba7dbe4cae4a956e88da476
   - enabled: 1
-    path: Assets/Scenes/MultiObjectDetection.unity
+    path: Assets/Scenes/StartScene.unity
+    guid: 41a07f792ac12b3409db53cb25bd3b3a
+  - enabled: 1
+    path: Assets/Scenes/EducationalMode.unity
+    guid: a99d0c9ef357b17468379bcf26572834
+  - enabled: 1
+    path: Assets/Scenes/QuizMode.unity
     guid: 0966777f7049ee847945bd43808262e0
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: f2bf97b3acdb64248a707c407c9fc54e, type: 2}

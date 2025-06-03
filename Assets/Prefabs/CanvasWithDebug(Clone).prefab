@@ -934,7 +934,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3951223430938963384}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a0f898c057f130b4c89f969de9d2aa6a, type: 3}
   m_Name: 
@@ -1676,9 +1676,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   namesTextAsset: {fileID: 4900000, guid: c01c64149c7930b45a76559caabd5c78, type: 3}
+  myTextMesh: {fileID: 5233332122858313584}
+  mcqManager: {fileID: 3186770652635040288}
   textFields:
   - {fileID: 5091610392839919955}
   - {fileID: 4276895504469107991}
   - {fileID: 4181424591155663020}
   - {fileID: 2766882054724892435}
-  myTextMesh: {fileID: 5233332122858313584}

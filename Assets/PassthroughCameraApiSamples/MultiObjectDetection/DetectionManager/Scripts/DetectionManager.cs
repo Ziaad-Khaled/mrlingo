@@ -164,10 +164,20 @@ namespace PassthroughCameraSamples.MultiObjectDetection
             {
                 // spawn a visual marker
                 var eMarker = Instantiate(m_spwanMarker);
+                eMarker.SetActive(true);
                 m_spwanedEntities.Add(eMarker);
 
                 // Update marker transform with the real world transform
-                eMarker.transform.SetPositionAndRotation(position.Value, Quaternion.identity);
+                eMarker.transform.position = position.Value;
+
+                // Make marker face the camera
+                Vector3 directionToCamera = Camera.main.transform.position - eMarker.transform.position;
+                // Optional: Zero out the y-component if you want it to rotate only on the y-axis (look horizontally)
+                directionToCamera.y = 0;
+
+                if (directionToCamera != Vector3.zero) // avoid zero direction error
+                    eMarker.transform.rotation = Quaternion.LookRotation(directionToCamera);
+
                 eMarker.GetComponent<DetectionSpawnMarkerAnim>().SetYoloClassName(className);
             }
 

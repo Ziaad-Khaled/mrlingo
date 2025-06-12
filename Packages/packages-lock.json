@@ -19,6 +19,13 @@
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
+    "com.meta.xr.sdk.voice": {
+      "version": "77.0.0",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
     "com.meta.xr.simulator": {
       "version": "76.0.0",
       "depth": 0,

@@ -3,6 +3,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Meta.XR.Samples;
+using SceneLogic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -36,6 +37,7 @@ namespace PassthroughCameraSamples.MultiObjectDetection
         private bool m_isStarted = false;
         private bool m_isSentisReady = false;
         private float m_delayPauseBackTime = 0;
+        private SceneModeManager m_sceneModeManager;
 
         #region Unity Functions
         private void Awake() => OVRManager.display.RecenteredPose += CleanMarkersCallBack;
@@ -49,6 +51,7 @@ namespace PassthroughCameraSamples.MultiObjectDetection
                 yield return null;
             }
             m_isSentisReady = true;
+            m_sceneModeManager = FindAnyObjectByType<SceneModeManager>();
         }
 
         private void Update()
@@ -117,7 +120,16 @@ namespace PassthroughCameraSamples.MultiObjectDetection
         /// </summary>
         private void SpwanCurrentDetectedObjects()
         {
-            var count = 0;
+            if(m_sceneModeManager.CurrentMode == SceneMode.Quiz)
+            {
+                foreach (GameObject m in m_spwanedEntities)
+                {
+                    if (m != null) Destroy(m);
+                }
+                m_spwanedEntities.Clear();
+            }
+
+            int count = 0;
             foreach (var box in m_uiInference.BoxDrawn)
             {
                 if (PlaceMarkerUsingEnvironmentRaycast(box.WorldPos, box.ClassName))
@@ -125,11 +137,8 @@ namespace PassthroughCameraSamples.MultiObjectDetection
                     count++;
                 }
             }
-            if (count > 0)
-            {
-                // Play sound if a new marker is placed.
-                m_placeSound.Play();
-            }
+
+            if (count > 0) m_placeSound.Play();
             OnObjectsIdentified?.Invoke(count);
         }
 

@@ -36,6 +36,8 @@ public class TTSSpeakerReflectionAdapter : MonoBehaviour
         // Keep TTSSpeakerInput’s custom formatting (DATE placeholders, etc.)
         if (_formatTextMethod != null)
             text = (string)_formatTextMethod.Invoke(speakerInput, new object[] { text });
+        
+        Debug.Log("Speaking: " + text);
 
         _speakMethod.Invoke(_speakerInstance, new object[] { text });
     }

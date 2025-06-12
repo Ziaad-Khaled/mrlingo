@@ -25,6 +25,7 @@ namespace PassthroughCameraSamples.MultiObjectDetection
         [SerializeField] private EnvironmentRayCastSampleManager m_environmentRaycast;
         [SerializeField] private float m_spawnDistance = 0.25f;
         [SerializeField] private AudioSource m_placeSound;
+        [SerializeField] private float m_markerOffsetRight = 0.2f;
 
         [Header("Sentis inference ref")]
         [SerializeField] private SentisInferenceRunManager m_runInference;
@@ -52,6 +53,10 @@ namespace PassthroughCameraSamples.MultiObjectDetection
             }
             m_isSentisReady = true;
             m_sceneModeManager = FindAnyObjectByType<SceneModeManager>();
+            if(m_sceneModeManager.CurrentMode == SceneMode.Educational)
+            {
+                m_markerOffsetRight = 0.0f;
+            }
         }
 
         private void Update()
@@ -147,51 +152,45 @@ namespace PassthroughCameraSamples.MultiObjectDetection
         /// </summary>
         private bool PlaceMarkerUsingEnvironmentRaycast(Vector3? position, string className)
         {
-            // Check if the position is valid
-            if (!position.HasValue)
-            {
-                return false;
-            }
+            if (!position.HasValue) return false;
 
-            // Check if you spanwed the same object before
-            var existMarker = false;
+            /* ---------- duplicate-check unchanged ---------- */
             foreach (var e in m_spwanedEntities)
             {
-                var markerClass = e.GetComponent<DetectionSpawnMarkerAnim>();
-                if (markerClass)
+                var anim = e.GetComponent<DetectionSpawnMarkerAnim>();
+                if (anim == null) continue;
+
+                if (Vector3.Distance(e.transform.position, position.Value) < m_spawnDistance &&
+                    anim.GetYoloClassName() == className)
                 {
-                    var dist = Vector3.Distance(e.transform.position, position.Value);
-                    if (dist < m_spawnDistance && markerClass.GetYoloClassName() == className)
-                    {
-                        existMarker = true;
-                        break;
-                    }
+                    return false;                     // already have one
                 }
             }
 
-            if (!existMarker)
-            {
-                // spawn a visual marker
-                var eMarker = Instantiate(m_spwanMarker);
-                eMarker.SetActive(true);
-                m_spwanedEntities.Add(eMarker);
+            /* ---------- spawn & offset ---------- */
+            var marker = Instantiate(m_spwanMarker);
+            marker.SetActive(true);
+            m_spwanedEntities.Add(marker);
 
-                // Update marker transform with the real world transform
-                eMarker.transform.position = position.Value;
+            // Push the marker to the right of the camera so the object stays visible.
+            Vector3 flatRight = new Vector3(Camera.main.transform.right.x,
+                0f,
+                Camera.main.transform.right.z).normalized;
+            Vector3 shiftedPos = position.Value + flatRight * m_markerOffsetRight;
+            marker.transform.position = shiftedPos;
 
-                // Make marker face the camera
-                Vector3 directionToCamera = Camera.main.transform.position - eMarker.transform.position;
-                // Optional: Zero out the y-component if you want it to rotate only on the y-axis (look horizontally)
-                directionToCamera.y = 0;
+            // Face the camera
+            Vector3 toCam = Camera.main.transform.position - marker.transform.position;
+            toCam.y = 0f;                                 // keep upright
+            if (toCam != Vector3.zero)
+                marker.transform.rotation = Quaternion.LookRotation(toCam);
 
-                if (directionToCamera != Vector3.zero) // avoid zero direction error
-                    eMarker.transform.rotation = Quaternion.LookRotation(directionToCamera);
+            marker.GetComponent<DetectionSpawnMarkerAnim>()
+                .SetYoloClassName(className);
 
-                eMarker.GetComponent<DetectionSpawnMarkerAnim>().SetYoloClassName(className);
-            }
-
-            return !existMarker;
+            return true;
         }
+
         #endregion
 
         #region Public Functions

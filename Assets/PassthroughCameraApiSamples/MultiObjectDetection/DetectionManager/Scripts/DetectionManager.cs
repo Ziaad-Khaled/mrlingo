@@ -157,6 +157,14 @@ namespace PassthroughCameraSamples.MultiObjectDetection
 
             /* ---------- EDUCATIONAL MODE---------- */
             int count = 0;
+            
+            // 1. Wipe existing markers so we don’t overlap
+            foreach (var m in m_spwanedEntities)
+            {
+                if (m) Destroy(m);
+            }
+            m_spwanedEntities.Clear();
+            
             foreach (var box in m_uiInference.BoxDrawn)
             {
                 if (PlaceMarkerUsingEnvironmentRaycast(box.WorldPos, box.ClassName))

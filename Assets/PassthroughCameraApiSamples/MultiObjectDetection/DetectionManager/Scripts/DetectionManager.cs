@@ -125,22 +125,42 @@ namespace PassthroughCameraSamples.MultiObjectDetection
         /// </summary>
         private void SpwanCurrentDetectedObjects()
         {
-            if(m_sceneModeManager.CurrentMode == SceneMode.Quiz)
+            /* ---------- QUIZ MODE ---------- */
+            if (m_sceneModeManager.CurrentMode == SceneMode.Quiz)
             {
-                foreach (GameObject m in m_spwanedEntities)
+                // 1. Wipe existing markers so we don’t overlap
+                foreach (var m in m_spwanedEntities)
                 {
-                    if (m != null) Destroy(m);
+                    if (m) Destroy(m);
                 }
                 m_spwanedEntities.Clear();
+
+                // 2. Early-out if nothing detected
+                var boxes = m_uiInference.BoxDrawn;
+                if (boxes.Count == 0)
+                {
+                    OnObjectsIdentified?.Invoke(0);
+                    return;
+                }
+
+                // 3. Pick ONE detection at random
+                int randomIdx = Random.Range(0, boxes.Count);
+                var box       = boxes[randomIdx];
+
+                // 4. Spawn that single marker
+                int spawned = PlaceMarkerUsingEnvironmentRaycast(box.WorldPos, box.ClassName) ? 1 : 0;
+                if (spawned > 0) m_placeSound.Play();
+
+                OnObjectsIdentified?.Invoke(spawned);
+                return;
             }
 
+            /* ---------- EDUCATIONAL MODE---------- */
             int count = 0;
             foreach (var box in m_uiInference.BoxDrawn)
             {
                 if (PlaceMarkerUsingEnvironmentRaycast(box.WorldPos, box.ClassName))
-                {
                     count++;
-                }
             }
 
             if (count > 0) m_placeSound.Play();

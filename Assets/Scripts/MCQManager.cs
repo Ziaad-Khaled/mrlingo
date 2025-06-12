@@ -81,15 +81,25 @@ public class MCQManager : MonoBehaviour
     }
 
     /// <summary>Sets the colour block and image tint so the change shows instantly.</summary>
-    private static void PaintButton(Button btn, Color colour)
+    private static void PaintButton(Button btn, Color tint)
     {
-        var block = btn.colors;
-        block.normalColor      =
-        block.highlightedColor =
-        block.pressedColor     =
-        block.selectedColor    = colour;
-        btn.colors = block;
+        var cb = btn.colors;
 
-        if (btn.image) btn.image.color = colour;
+        // Preserve each state’s old alpha
+        tint.a               = cb.normalColor.a;       cb.normalColor      = tint;
+        tint.a               = cb.highlightedColor.a;  cb.highlightedColor = tint;
+        tint.a               = cb.pressedColor.a;      cb.pressedColor     = tint;
+        tint.a               = cb.selectedColor.a;     cb.selectedColor    = tint;
+
+        btn.colors = cb;
+
+        // Make the idle look change immediately without touching alpha
+        if (btn.image)
+        {
+            var imgCol = tint;
+            imgCol.a = btn.image.color.a;
+            btn.image.color = imgCol;
+        }
     }
+
 }

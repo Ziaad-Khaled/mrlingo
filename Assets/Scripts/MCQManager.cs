@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -69,8 +70,8 @@ public class MCQManager : MonoBehaviour
         
         if (tts)
         {
-            string word = answerButtons[correctAnswerIndex]
-                          .GetComponentInChildren<Text>()
+            var word = answerButtons[correctAnswerIndex]
+                          .GetComponentInChildren<TextMeshProUGUI>()
                           .text;
             
             Debug.Log("about to speak: " + word);

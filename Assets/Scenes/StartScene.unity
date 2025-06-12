@@ -934,6 +934,10 @@ PrefabInstance:
       propertyPath: m_PresetInfoIsWorld
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114778957838386506, guid: ddb963bcde7d8a04a88b3ee4709f46c7, type: 3}
+      propertyPath: m_dropdownPrefab
+      value: 
+      objectReference: {fileID: 224949956480874824, guid: 2d527f05c36c0fe4293d59c99b60ac32, type: 3}
     - target: {fileID: 223237602148641016, guid: ddb963bcde7d8a04a88b3ee4709f46c7, type: 3}
       propertyPath: m_Camera
       value: 

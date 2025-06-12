@@ -71,6 +71,16 @@ namespace PassthroughCameraSamples.StartScene
                     _ = uiBuilder.AddButton(Path.GetFileNameWithoutExtension(scene.Item2), () => LoadScene(scene.Item1), -1, DebugUIBuilder.DEBUG_PANE_CENTER);
                 }
             }
+            
+            var languages = new List<string> { "German", "Spanish" };
+            
+            uiBuilder.AddLabel("Choose a language", DebugUIBuilder.DEBUG_PANE_CENTER);
+            
+            uiBuilder.AddDropdown("Choose Language", languages, (index) =>
+            {
+                LanguageSettings.SelectedLanguage = languages[index];
+                Debug.Log("Selected language: " + LanguageSettings.SelectedLanguage);
+            }, DebugUIBuilder.DEBUG_PANE_CENTER);
 
             uiBuilder.Show();
         }

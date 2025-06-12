@@ -1,6 +1,7 @@
 // Copyright (c) Meta Platforms, Inc. and affiliates.
 // Original Source code from Oculus Starter Samples (https://github.com/oculus-samples/Unity-StarterSamples)
 
+using System;
 using System.Collections.Generic;
 using Meta.XR.Samples;
 using TMPro;
@@ -43,6 +44,9 @@ namespace PassthroughCameraSamples.StartScene
 
         [SerializeField]
         private RectTransform m_radioPrefab = null;
+        
+        [SerializeField]
+        private RectTransform m_dropdownPrefab = null; 
 
         [SerializeField]
         private RectTransform m_textPrefab = null;
@@ -299,6 +303,23 @@ namespace PassthroughCameraSamples.StartScene
                 Relayout();
             }
         }
+        
+        public RectTransform AddDropdown(string label, List<string> options, Action<int> onValueChanged, int targetCanvas = 0)
+        {
+            var rt = Instantiate(m_dropdownPrefab);
+            AddRect(rt, targetCanvas);
+
+            var dropdownLabel = rt.GetComponentInChildren<TextMeshProUGUI>();
+            dropdownLabel.text = label;
+
+            var dropdown = rt.GetComponentInChildren<TMPro.TMP_Dropdown>();
+            dropdown.ClearOptions();
+            dropdown.AddOptions(options);
+            dropdown.onValueChanged.AddListener(onValueChanged.Invoke);
+
+            return rt;
+        }
+
 
         public RectTransform AddButton(string label, OnClick handler = null, int buttonIndex = -1, int targetCanvas = 0,
             bool highResolutionText = false)

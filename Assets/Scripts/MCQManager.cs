@@ -1,106 +1,95 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.XR;
 
-
+/// <summary>
+/// Displays an MCQ panel, lets the user pick an answer once,
+/// and colours the buttons immediately after the click.
+/// </summary>
 public class MCQManager : MonoBehaviour
 {
-    public Transform xrCamera;
-    public float distanceFromCamera = 2f;
+    /* ──────────────── Inspector fields ──────────────── */
 
-    public Button[] answerButtons;
-    public int correctAnswerIndex = 1; // Index starts at 0
+    [Header("Placement")]
+    [SerializeField] private Transform xrCamera;
+    [SerializeField] private float distanceFromCamera = 2f;
 
-    private int selectedAnswerIndex = -1;
-    private bool hasSubmitted = false;
+    [Header("MCQ")]
+    [SerializeField] private Button[] answerButtons;
+    [SerializeField] public int correctAnswerIndex = 1;   // 0-based
 
-    void Start()
+    /* ──────────────── Internal state ──────────────── */
+
+    private int  selectedAnswer = -1;
+    private bool answered        = false;
+
+    /* ──────────────── Unity lifecycle ──────────────── */
+
+    private void Start()
     {
-        // Position panel in front of user
-        if (xrCamera != null)
-        {
-            Vector3 forward = xrCamera.forward;
-            forward.y = 0;
-            transform.position = xrCamera.position + forward.normalized * distanceFromCamera;
-            transform.LookAt(xrCamera);
-            transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
-        }
+        PlacePanelInFrontOfUser();
+        HookButtonEvents();
+    }
 
-        // Assign button click listeners
+    /* ──────────────── Helpers ──────────────── */
+
+    /// <summary>Positions the panel a fixed distance in front of the XR camera.</summary>
+    private void PlacePanelInFrontOfUser()
+    {
+        if (xrCamera == null) return;
+
+        Vector3 fwd = xrCamera.forward;
+        fwd.y = 0;                                             // keep panel upright
+        transform.position = xrCamera.position + fwd.normalized * distanceFromCamera;
+        transform.LookAt(xrCamera.position, Vector3.up);       // face the user
+    }
+
+    /// <summary>Adds a click listener to every answer button.</summary>
+    private void HookButtonEvents()
+    {
         for (int i = 0; i < answerButtons.Length; i++)
         {
-            int index = i; // Capture index for lambda
-            answerButtons[i].onClick.AddListener(() => OnAnswerSelected(index));
+            int idx = i;                                       // capture loop variable
+            answerButtons[i].onClick.AddListener(() => OnButtonPressed(idx));
         }
     }
 
-    void OnAnswerSelected(int index)
+    /// <summary>Called exactly once when the user presses a button.</summary>
+    private void OnButtonPressed(int index)
     {
-        selectedAnswerIndex = index;
-        Debug.Log("Selected answer index: " + index);
+        if (answered) return;                                  // ignore extra clicks
+
+        selectedAnswer = index;
+        GradeAnswer();
     }
 
-public void SubmitAnswer()
-{
-    Debug.Log("SubmitAnswer() called. hasSubmitted = " + hasSubmitted);
-
-    if (hasSubmitted)
+    /// <summary>Colours buttons and logs the result.</summary>
+    private void GradeAnswer()
     {
-        Debug.Log("Already submitted, ignoring.");
-        return;
-    }
+        answered = true;
 
-    hasSubmitted = true;
-
-    // Reset all button colors
-    foreach (Button btn in answerButtons)
-    {
-        SetButtonColor(btn, Color.white);
-    }
-
-    if (selectedAnswerIndex == correctAnswerIndex)
-    {
-        Debug.Log("✅ Correct!");
-        SetButtonColor(answerButtons[selectedAnswerIndex], Color.green);
-    }
-    else
-    {
-        Debug.Log("❌ Wrong answer.");
-        SetButtonColor(answerButtons[selectedAnswerIndex], Color.red);
-        SetButtonColor(answerButtons[correctAnswerIndex], Color.green);
-    }
-
-    Debug.Log("SubmitAnswer() finished.");
-}
-
-
-void Update()
-{
-    Debug.Log($"Update: hasSubmitted={hasSubmitted}, selectedAnswerIndex={selectedAnswerIndex}");
-
-    // Detect trigger press (IndexTrigger)
-    bool triggerPressed = false;
-    InputDevice device = InputDevices.GetDeviceAtXRNode(XRNode.RightHand);
-
-    if (device.TryGetFeatureValue(CommonUsages.triggerButton, out triggerPressed) && triggerPressed)
-    {
-        if (!hasSubmitted && selectedAnswerIndex != -1)
+        for (int i = 0; i < answerButtons.Length; i++)
         {
-            SubmitAnswer();
+            Color colour =
+                (i == correctAnswerIndex)        ? Color.green :
+                (i == selectedAnswer)            ? Color.red   :
+                                                   Color.white;
+
+            PaintButton(answerButtons[i], colour);
         }
+
+        Debug.Log(selectedAnswer == correctAnswerIndex ? "✅ Correct" : "❌ Wrong");
     }
-}
 
-
-    private void SetButtonColor(Button button, Color color)
+    /// <summary>Sets the colour block and image tint so the change shows instantly.</summary>
+    private static void PaintButton(Button btn, Color colour)
     {
-        ColorBlock cb = button.colors;
-        cb.normalColor = color;
-        cb.highlightedColor = color;
-        cb.pressedColor = color;
-        cb.selectedColor = color;
-        button.colors = cb;
+        var block = btn.colors;
+        block.normalColor      =
+        block.highlightedColor =
+        block.pressedColor     =
+        block.selectedColor    = colour;
+        btn.colors = block;
+
+        if (btn.image) btn.image.color = colour;
     }
 }

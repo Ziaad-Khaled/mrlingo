@@ -16,8 +16,7 @@ void Update()
     {
         Debug.Log("Simulating button click...");
         targetButton.onClick.Invoke();  // Triggers OnAnswerSelected and logs "Selected answer index: 0"
-        Debug.Log("Submitting answer...");
-        mcqManager.SubmitAnswer();      // Should print the SubmitAnswer logs above
+        Debug.Log("Submitting answer..."); 
         hasClicked = true;
     }
 }

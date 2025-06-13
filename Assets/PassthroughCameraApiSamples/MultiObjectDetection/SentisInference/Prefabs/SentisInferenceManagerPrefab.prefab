@@ -123,7 +123,12 @@ MonoBehaviour:
   m_backend: 512
   m_sentisModel: {fileID: 5022602860645237092, guid: 69ab50aef18ae412cac4b305492d527c, type: 3}
   m_layersPerFrame: 39
-  m_labelsAsset: {fileID: 4900000, guid: c01c64149c7930b45a76559caabd5c78, type: 3}
+  m_labelsAssetsDictonary:
+    _serializedList:
+    - Key: German
+      Value: {fileID: 4900000, guid: c01c64149c7930b45a76559caabd5c78, type: 3}
+    - Key: Spanish
+      Value: {fileID: 4900000, guid: 127ef0ef90f11fa40ac89f346316d4a7, type: 3}
   m_uiInference: {fileID: 2184060436030677583}
   OnnxModel: {fileID: 5022602860645237092, guid: e61826a46beb24bb380fd628c56eacaa, type: 3}
   m_iouThreshold: 0.57
@@ -154,7 +159,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ScannerUiMenuManager, Assembly-CSharp
-        m_MethodName: OnObjectsDetected
+        m_MethodName: 
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

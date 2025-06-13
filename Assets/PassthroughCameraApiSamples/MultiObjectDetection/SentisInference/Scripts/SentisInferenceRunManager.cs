@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections;
+using AYellowpaper.SerializedCollections;
 using Meta.XR.Samples;
 using Unity.Sentis;
 using UnityEngine;
@@ -16,7 +17,7 @@ namespace PassthroughCameraSamples.MultiObjectDetection
         [SerializeField] private BackendType m_backend = BackendType.CPU;
         [SerializeField] private ModelAsset m_sentisModel;
         [SerializeField] private int m_layersPerFrame = 25;
-        [SerializeField] private TextAsset m_labelsAsset;
+        public SerializedDictionary<string, TextAsset> m_labelsAssetsDictonary;
         public bool IsModelLoaded { get; private set; } = false;
 
         [Header("UI display references")]
@@ -28,6 +29,7 @@ namespace PassthroughCameraSamples.MultiObjectDetection
         [SerializeField, Range(0, 1)] private float m_scoreThreshold = 0.23f;
         [Space(40)]
 
+        private TextAsset m_labelsAsset;
         private Worker m_engine;
         private IEnumerator m_schedule;
         private bool m_started = false;
@@ -45,7 +47,8 @@ namespace PassthroughCameraSamples.MultiObjectDetection
         {
             // Wait for the UI to be ready because when Sentis load the model it will block the main thread.
             yield return new WaitForSeconds(0.05f);
-
+            
+            m_labelsAsset  = m_labelsAssetsDictonary[LanguageSettings.SelectedLanguage];
             m_uiInference.SetLabels(m_labelsAsset);
             LoadModel();
         }

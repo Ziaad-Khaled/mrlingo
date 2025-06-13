@@ -1,11 +1,12 @@
 using System.Collections.Generic;
+using AYellowpaper.SerializedCollections;
 using TMPro;
 using UnityEngine;
 
 public class RandomNameFiller : MonoBehaviour
 {
     [Tooltip("Text asset containing names, one per line")]
-    public TextAsset namesTextAsset;
+    public SerializedDictionary<string, TextAsset> namesTextAssetDictionary;
 
     [Tooltip("TextMesh component to assign to a random TextMeshProUGUI")]
     public TextMesh myTextMesh;
@@ -17,9 +18,12 @@ public class RandomNameFiller : MonoBehaviour
     public List<TextMeshProUGUI> textFields;
 
     private List<string> namesList = new List<string>();
+    private TextAsset namesTextAsset;
 
     void Start()
     {
+        namesTextAsset = namesTextAssetDictionary[LanguageSettings.SelectedLanguage];
+        
         // Validate the TextAsset
         if (namesTextAsset == null)
         {

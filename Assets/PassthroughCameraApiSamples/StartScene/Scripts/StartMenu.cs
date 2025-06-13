@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Meta.XR.Samples;
 using UnityEngine;
 
@@ -75,14 +76,17 @@ namespace PassthroughCameraSamples.StartScene
             
             var languages = new List<string> { "German", "Spanish" };
             
+            var orderedLanguages = new List<string> { LanguageSettings.SelectedLanguage };
+            orderedLanguages.AddRange(languages.Except(new[] { LanguageSettings.SelectedLanguage }));
+
+            // Add UI elements
             uiBuilder.AddLabel("Choose a language", DebugUIBuilder.DEBUG_PANE_CENTER);
-            
-            uiBuilder.AddDropdown("Choose Language", languages, (index) =>
+            uiBuilder.AddDropdown("Choose Language", orderedLanguages, (index) =>
             {
-                LanguageSettings.SelectedLanguage = languages[index];
+                LanguageSettings.SelectedLanguage = orderedLanguages[index];
                 Debug.Log("Selected language: " + LanguageSettings.SelectedLanguage);
             }, DebugUIBuilder.DEBUG_PANE_CENTER);
-
+            
             _ = uiBuilder.AddDivider(DebugUIBuilder.DEBUG_PANE_CENTER);
             _ = uiBuilder.AddDivider(DebugUIBuilder.DEBUG_PANE_CENTER);
             

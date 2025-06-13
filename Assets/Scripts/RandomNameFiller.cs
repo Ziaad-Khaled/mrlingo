@@ -57,22 +57,34 @@ public class RandomNameFiller : MonoBehaviour
 
         // Prepare distractors by excluding the correct answer
         List<string> distractors = new List<string>(namesList);
-        if (distractors.Contains(myTextMesh.text))
-        {
-            distractors.Remove(myTextMesh.text);
-        }
+        distractors.RemoveAll(name => name == myTextMesh.text);
         if (distractors.Count == 0)
         {
             Debug.LogError("No distractors available after removing the correct answer.");
             return;
         }
 
+        // Create a list for unique distractor selection
+        List<string> availableDistractors = new List<string>(distractors);
+
         // Fill remaining text fields with distractors
         for (int i = 0; i < textFields.Count; i++)
         {
             if (i != correctIndex && textFields[i] != null)
             {
-                string randomName = distractors[Random.Range(0, distractors.Count)];
+                string randomName;
+                if (availableDistractors.Count > 0)
+                {
+                    // Select a unique distractor and remove it from available list
+                    int index = Random.Range(0, availableDistractors.Count);
+                    randomName = availableDistractors[index];
+                    availableDistractors.RemoveAt(index);
+                }
+                else
+                {
+                    // If no more unique distractors, select with replacement
+                    randomName = distractors[Random.Range(0, distractors.Count)];
+                }
                 textFields[i].text = randomName;
             }
         }

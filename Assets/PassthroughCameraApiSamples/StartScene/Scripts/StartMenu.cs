@@ -43,6 +43,7 @@ namespace PassthroughCameraSamples.StartScene
             }
 
             var uiBuilder = DebugUIBuilder.Instance;
+            
             if (passthroughScenes.Count > 0)
             {
                 _ = uiBuilder.AddLabel("Passthrough Sample Scenes", DebugUIBuilder.DEBUG_PANE_LEFT);
@@ -82,6 +83,9 @@ namespace PassthroughCameraSamples.StartScene
                 Debug.Log("Selected language: " + LanguageSettings.SelectedLanguage);
             }, DebugUIBuilder.DEBUG_PANE_CENTER);
 
+            _ = uiBuilder.AddDivider(DebugUIBuilder.DEBUG_PANE_CENTER);
+            _ = uiBuilder.AddDivider(DebugUIBuilder.DEBUG_PANE_CENTER);
+            
             uiBuilder.Show();
         }
 

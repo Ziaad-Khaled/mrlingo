@@ -42,8 +42,16 @@ public class SpeakTextFromTMP : MonoBehaviour
 
     public void Speak()
     {
+        string textToSpeak = textMeshPro.text;
+        if(LanguageSettings.SelectedLanguage == "German")
+        {
+            textToSpeak = "Das ist " + textMeshPro.text;
+        }
+        else if(LanguageSettings.SelectedLanguage == "Spanish")
+        {
+            textToSpeak = "Esto es " + textMeshPro.text;
+        }
         
-        var textToSpeak = textMeshPro.text;
         speakerAdapter.Speak(textToSpeak);
     }
 }

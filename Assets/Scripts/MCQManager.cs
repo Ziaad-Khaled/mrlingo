@@ -74,6 +74,15 @@ public class MCQManager : MonoBehaviour
                           .GetComponentInChildren<TextMeshProUGUI>()
                           .text;
             
+            if(LanguageSettings.SelectedLanguage == "German")
+            {
+                word = "Das ist " + word;
+            }
+            else if(LanguageSettings.SelectedLanguage == "Spanish")
+            {
+                word = "Esto es " + word;
+            }
+            
             Debug.Log("about to speak: " + word);
             tts.Speak(word);
         }

@@ -30,6 +30,11 @@ namespace PassthroughCameraSamples.MultiObjectDetection
         [Header("Sentis inference ref")]
         [SerializeField] private SentisInferenceRunManager m_runInference;
         [SerializeField] private SentisInferenceUiManager m_uiInference;
+        
+        [Header("Scaling configuration")]
+        [Tooltip("World‑space distance (in metres) at which the marker keeps its *original prefab* scale. Farther away ⇒ proportionally larger. Nearer ⇒ never smaller than the prefab scale.")]
+        [SerializeField] private float m_referenceScaleDistance = 0.5f;
+        
         [Space(10)]
         public UnityEvent<int> OnObjectsIdentified;
 
@@ -212,6 +217,14 @@ namespace PassthroughCameraSamples.MultiObjectDetection
             toCam.y = 0f;                                 // keep upright
             if (toCam != Vector3.zero)
                 marker.transform.rotation = Quaternion.LookRotation(toCam);
+            
+            // ---------------- SCALE RELATIVE TO CAMERA ----------------
+            Vector3 originalScale = marker.transform.localScale;               // the prefab’s scale (e.g., 0.001)
+            float   distance      = Vector3.Distance(Camera.main.transform.position, marker.transform.position);
+            float   scaleFactor   = distance / Mathf.Max(0.0001f, m_referenceScaleDistance);
+            if (scaleFactor < 1f) scaleFactor = 1f;                            // never shrink below original
+            marker.transform.localScale = originalScale * scaleFactor;
+            // ----------------------------------------------------------------
 
             marker.GetComponent<DetectionSpawnMarkerAnim>()
                 .SetYoloClassName(className);

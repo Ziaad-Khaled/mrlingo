@@ -15,8 +15,14 @@ public class TTSSpeakerReflectionAdapter : MonoBehaviour
 
     private void Awake()
     {
+        if (Meta.WitAi.TTS.TTSService.Instance == null)
+        {
+            Debug.LogError("TTSService instance is null.");
+        }
         if (!CacheReflection())
+        {
             Debug.LogError($"{name}: TTSSpeakerReflectionAdapter could not initialise.");
+        }
     }
 
     /* ───────────── Public API ───────────── */
@@ -33,14 +39,40 @@ public class TTSSpeakerReflectionAdapter : MonoBehaviour
             return;
         }
 
-        // Keep TTSSpeakerInput’s custom formatting (DATE placeholders, etc.)
+        // Remove from cache to force fresh request
+        if (Meta.WitAi.TTS.TTSService.Instance?.RuntimeCacheHandler != null)
+        {
+            Debug.Log("Removing clip from cache: " + text);
+            Meta.WitAi.TTS.TTSService.Instance.RuntimeCacheHandler.RemoveClip(text);
+        }
+        else
+        {
+            Debug.LogWarning("Cannot remove clip from cache: RuntimeCacheHandler is null.");
+        }
+
+        // Format text if possible
         if (_formatTextMethod != null)
+        {
             text = (string)_formatTextMethod.Invoke(speakerInput, new object[] { text });
-        
+            Debug.Log("Formatted text: " + text);
+        }
+
         Debug.Log("Speaking: " + text);
 
-        _speakMethod.Invoke(_speakerInstance, new object[] { text });
+        try
+        {
+            _speakMethod.Invoke(_speakerInstance, new object[] { text });
+        }
+        catch (TargetInvocationException ex)
+        {
+            Debug.LogError($"Error while speaking: {ex.InnerException?.Message ?? ex.Message}");
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Unexpected error while speaking: {ex.Message}");
+        }
     }
+
 
     /* ───────────── Reflection ───────────── */
 

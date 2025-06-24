@@ -16,14 +16,14 @@ public class MCQManager : MonoBehaviour
     private int  selectedAnswer = -1;
     private bool answered       = false;
 
-    private TTSSpeakerReflectionAdapter tts;
+    private TTSPlayer tts;
 
     private void Start()
     {
         PlacePanelInFrontOfUser();
         HookButtonEvents();
         
-        tts = FindAnyObjectByType<TTSSpeakerReflectionAdapter>();
+        tts = FindAnyObjectByType<TTSPlayer>();
         if (!tts)
             Debug.LogWarning($"{name}: No TTSSpeakerReflectionAdapter found – buttons will not be spoken.");
     }
@@ -82,9 +82,24 @@ public class MCQManager : MonoBehaviour
             {
                 word = "Esto es " + word;
             }
+
+            string language;
+            
+            if (LanguageSettings.SelectedLanguage == "German")
+            {
+                language = "de";
+            }
+            else if (LanguageSettings.SelectedLanguage == "Spanish")
+            {
+                language = "es";
+            }
+            else
+            {
+                language = "en"; // Default to English
+            }
             
             Debug.Log("about to speak: " + word);
-            tts.Speak(word);
+            tts.StartCoroutine(tts.Speak(word, language));
         }
     }
 

@@ -8,7 +8,7 @@ public class SpeakTextFromTMP : MonoBehaviour
     [SerializeField] private TextMeshProUGUI textMeshPro;
     private Button m_button;
 
-    private TTSSpeakerReflectionAdapter speakerAdapter;
+    private TTSPlayer speakerAdapter;
 
     private void Awake()
     {
@@ -17,7 +17,7 @@ public class SpeakTextFromTMP : MonoBehaviour
 
     private void Start()
     {
-        speakerAdapter = FindObjectOfType<TTSSpeakerReflectionAdapter>();
+        speakerAdapter = FindObjectOfType<TTSPlayer>();
         if (speakerAdapter == null)
         {
             Debug.LogError("TTSSpeakerReflectionAdapter not found in the scene.");
@@ -52,6 +52,21 @@ public class SpeakTextFromTMP : MonoBehaviour
             textToSpeak = "Esto es " + textMeshPro.text;
         }
         
-        speakerAdapter.Speak(textToSpeak);
+        string language;
+        
+        if (LanguageSettings.SelectedLanguage == "German")
+        {
+            language = "de";
+        }
+        else if (LanguageSettings.SelectedLanguage == "Spanish")
+        {
+            language = "es";
+        }
+        else
+        {
+            language = "en"; // Default to English
+        }
+        
+        speakerAdapter.StartCoroutine(speakerAdapter.Speak(textToSpeak, language));
     }
 }

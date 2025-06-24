@@ -55,7 +55,7 @@ MonoBehaviour:
   m_markerOffsetRight: 0.2
   m_runInference: {fileID: 0}
   m_uiInference: {fileID: 0}
-  m_referenceScaleDistance: 0.1
+  m_referenceScaleDistance: 1
   OnObjectsIdentified:
     m_PersistentCalls:
       m_Calls:

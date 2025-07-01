@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
@@ -7,9 +6,9 @@ public class SpeakTextFromTMP : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI textMeshPro;
     [SerializeField] private TextMesh textMesh;
+    [SerializeField] private TTSPlayer speakerAdapter;
+    
     private Button m_button;
-
-    private TTSPlayer speakerAdapter;
     private string textToSpeak;
 
     private void Awake()

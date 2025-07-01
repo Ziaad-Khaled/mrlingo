@@ -6,13 +6,27 @@ using UnityEngine.UI;
 public class SpeakTextFromTMP : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI textMeshPro;
+    [SerializeField] private TextMesh textMesh;
     private Button m_button;
 
     private TTSPlayer speakerAdapter;
+    private string textToSpeak;
 
     private void Awake()
     {
         m_button = GetComponent<Button>();
+        if(textMesh != null)
+        {
+            textToSpeak = textMesh.text;
+        }
+        else if(textMeshPro != null)
+        {
+            textToSpeak = textMeshPro.text;
+        }
+        else
+        {
+            Debug.LogError("No TextMesh or TextMeshProUGUI assigned.");
+        }
     }
 
     private void Start()
@@ -22,11 +36,6 @@ public class SpeakTextFromTMP : MonoBehaviour
         {
             Debug.LogError("TTSSpeakerReflectionAdapter not found in the scene.");
             return;
-        }
-
-        if (textMeshPro == null)
-        {
-            Debug.LogError("TextMeshProUGUI not assigned.");
         }
     }
     
@@ -42,14 +51,26 @@ public class SpeakTextFromTMP : MonoBehaviour
 
     public void Speak()
     {
-        string textToSpeak = textMeshPro.text;
+        if(textMesh != null)
+        {
+            textToSpeak = textMesh.text;
+        }
+        else if(textMeshPro != null)
+        {
+            textToSpeak = textMeshPro.text;
+        }
+        else
+        {
+            Debug.LogError("No TextMesh or TextMeshProUGUI assigned.");
+        }
+        
         if(LanguageSettings.SelectedLanguage == "German")
         {
-            textToSpeak = "Das ist " + textMeshPro.text;
+            textToSpeak = "Das ist " + textToSpeak;
         }
         else if(LanguageSettings.SelectedLanguage == "Spanish")
         {
-            textToSpeak = "Esto es " + textMeshPro.text;
+            textToSpeak = "Esto es " + textToSpeak;
         }
         
         string language;

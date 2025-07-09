@@ -148,9 +148,23 @@ namespace PassthroughCameraSamples.MultiObjectDetection
                     return;
                 }
 
-                // 3. Pick ONE detection at random
-                int randomIdx = Random.Range(0, boxes.Count);
-                var box       = boxes[randomIdx];
+                // 3. Find the closest detection to the camera
+                var cameraPos = Camera.main.transform.position;
+                float minDistance = float.MaxValue;
+                int closestIdx = 0;
+                for (int i = 0; i < boxes.Count; i++)
+                {
+                    if (boxes[i].WorldPos.HasValue)
+                    {
+                        float distance = Vector3.Distance(cameraPos, boxes[i].WorldPos.Value);
+                        if (distance < minDistance)
+                        {
+                            minDistance = distance;
+                            closestIdx = i;
+                        }
+                    }
+                }
+                var box = boxes[closestIdx];
 
                 // 4. Spawn that single marker
                 int spawned = PlaceMarkerUsingEnvironmentRaycast(box.WorldPos, box.ClassName) ? 1 : 0;

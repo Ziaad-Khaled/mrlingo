@@ -530,6 +530,54 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6920871428046243622}
     m_Modifications:
+    - target: {fileID: 413409845456045989, guid: 98d0d872eb245a64aa4ec077af3ba917, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 709143373333286616, guid: 98d0d872eb245a64aa4ec077af3ba917, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1062214572765733223, guid: 98d0d872eb245a64aa4ec077af3ba917, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1148403845463244044, guid: 98d0d872eb245a64aa4ec077af3ba917, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1360893775757875258, guid: 98d0d872eb245a64aa4ec077af3ba917, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1670283078407126267, guid: 98d0d872eb245a64aa4ec077af3ba917, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2000788966023029157, guid: 98d0d872eb245a64aa4ec077af3ba917, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2455745223421517398, guid: 98d0d872eb245a64aa4ec077af3ba917, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2539085591261480437, guid: 98d0d872eb245a64aa4ec077af3ba917, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4373108608486558295, guid: 98d0d872eb245a64aa4ec077af3ba917, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4495895826884699224, guid: 98d0d872eb245a64aa4ec077af3ba917, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5528644824242401203, guid: 98d0d872eb245a64aa4ec077af3ba917, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5564311660159582116, guid: 98d0d872eb245a64aa4ec077af3ba917, type: 3}
       propertyPath: m_ClearFlags
       value: 2
@@ -609,6 +657,42 @@ PrefabInstance:
     - target: {fileID: 5564311660167092668, guid: 98d0d872eb245a64aa4ec077af3ba917, type: 3}
       propertyPath: isInsightPassthroughEnabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5651304360812069308, guid: 98d0d872eb245a64aa4ec077af3ba917, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5821358845200192957, guid: 98d0d872eb245a64aa4ec077af3ba917, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6935488373726122961, guid: 98d0d872eb245a64aa4ec077af3ba917, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7346243866499479312, guid: 98d0d872eb245a64aa4ec077af3ba917, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7573131205756349006, guid: 98d0d872eb245a64aa4ec077af3ba917, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8602344039730383950, guid: 98d0d872eb245a64aa4ec077af3ba917, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8866024606704649523, guid: 98d0d872eb245a64aa4ec077af3ba917, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8962355421581634188, guid: 98d0d872eb245a64aa4ec077af3ba917, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9021523096726533863, guid: 98d0d872eb245a64aa4ec077af3ba917, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
